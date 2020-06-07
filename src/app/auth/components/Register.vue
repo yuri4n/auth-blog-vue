@@ -57,8 +57,6 @@
 </template>
 
 <script>
-import axios from "../../../axios_auth";
-
 export default {
   name: "Register",
   data: () => ({
@@ -75,11 +73,7 @@ export default {
         return;
       }
 
-      await axios.post(":signUp?key=AIzaSyBh7e65HnZbT04Ex9r2ikLm3VsniBnSwuk", {
-        email: this.userData.email,
-        password: this.userData.password,
-        returnSecureToken: true
-      });
+      await this.$store.dispatch("signUp", this.userData);
 
       this.userData = {
         name: "",

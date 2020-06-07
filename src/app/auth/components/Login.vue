@@ -39,8 +39,6 @@
 </template>
 
 <script>
-import axios from "../../../axios_auth";
-
 export default {
   name: "Login",
   data: () => ({
@@ -51,14 +49,10 @@ export default {
   }),
   methods: {
     async login() {
-      await axios.post(
-        ":signInWithPassword?key=AIzaSyBh7e65HnZbT04Ex9r2ikLm3VsniBnSwuk",
-        {
-          email: this.userData.email,
-          password: this.userData.password,
-          returnSecureToken: true
-        }
-      );
+      await this.$store.dispatch("logIn", {
+        email: this.userData.email,
+        password: this.userData.password
+      });
 
       this.userData = {
         email: "",

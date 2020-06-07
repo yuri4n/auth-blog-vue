@@ -1,5 +1,6 @@
 import Vue from "vue";
 import VueRouter from "vue-router";
+import store from "../store/store";
 
 import Home from "../app/home/Home";
 import Auth from "../app/auth/Auth";
@@ -12,7 +13,14 @@ const routes = [
   {
     path: "/home",
     name: "Home",
-    component: Home
+    component: Home,
+    beforeEnter(to, from, next) {
+      if (store.state.idToken) {
+        next();
+      } else {
+        next("/auth");
+      }
+    }
   },
   {
     path: "/",

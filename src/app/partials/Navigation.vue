@@ -33,30 +33,43 @@
           >About</router-link
         >
         <router-link
+          v-if="user"
           to="/about"
           active-class="font-bold"
           class="mr-8 hover:text-gray-700"
-          >{{ userName }}</router-link
+          >{{ user.name }}</router-link
         >
-        <router-link to="/auth" class="text-red-500">Sign Out</router-link>
+        <router-link
+          v-if="isAuthenticated"
+          to="/auth"
+          class="text-red-500"
+          @click="onLogout"
+          >Log Out</router-link
+        >
       </ul>
     </div>
   </div>
 </template>
 
 <script>
-import axios from "axios";
-
 export default {
   name: "Navigation",
   created() {
-    axios.get("/users.json").then(res => {
-      this.userName = Object.values(res.data)[0].name;
-    });
+    this.$store.dispatch("fetchUser");
   },
-  data: () => ({
-    userName: ""
-  })
+  computed: {
+    user() {
+      return !this.$store.getters.user ? false : this.$store.getters.user;
+    },
+    isAuthenticated() {
+      return this.$store.getters.isAuthenticated;
+    }
+  },
+  methods: {
+    onLogout() {
+      this.$store.dispatch("logOut");
+    }
+  }
 };
 </script>
 
