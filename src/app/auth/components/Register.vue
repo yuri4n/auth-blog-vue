@@ -7,6 +7,7 @@
           placeholder="Your Nice Name"
           class="transition duration-300 inline-block w-full border border-gray-400 px-5 py-3 italic placeholder-gray-600 text-gray-800 focus:border-red-500 outline-none"
           type="email"
+          v-model="userData.name"
         />
       </label>
       <label class="my-2 inline-block w-full">
@@ -15,6 +16,7 @@
           placeholder="Your Awesome Email"
           class="transition duration-300 inline-block w-full border border-gray-400 px-5 py-3 italic placeholder-gray-600 text-gray-800 focus:border-red-500 outline-none"
           type="email"
+          v-model="userData.email"
         />
       </label>
       <label class="my-2 inline-block w-full">
@@ -23,6 +25,7 @@
           placeholder="Your Secret Password"
           class="transition duration-300 inline-block w-full border border-gray-400 px-5 py-3 italic placeholder-gray-600 text-gray-800 focus:border-red-500 outline-none"
           type="password"
+          v-model="userData.password"
         />
       </label>
       <label class="my-2 inline-block w-full">
@@ -31,12 +34,14 @@
           placeholder="Repeat Your Secret Password"
           class="transition duration-300 inline-block w-full border border-gray-400 px-5 py-3 italic placeholder-gray-600 text-gray-800 focus:border-red-500 outline-none"
           type="password"
+          v-model="repeatPassword"
         />
       </label>
     </div>
     <div>
       <button
         class="mr-5 py-2 border-red-500 border w-32 tracking-wider bg-gray-100 shadow text-red-500 hover:shadow-2xl transition duration-300 hover:text-red-400 hover:border-red-400"
+        @click="sendData"
       >
         Sign Up
       </button>
@@ -52,8 +57,34 @@
 </template>
 
 <script>
+import axios from "../../../axios_auth";
+
 export default {
-  name: "Register"
+  name: "Register",
+  data: () => ({
+    userData: {
+      name: "",
+      email: "",
+      password: ""
+    },
+    repeatPassword: ""
+  }),
+  methods: {
+    async sendData() {
+      if (this.userData.password !== this.repeatPassword) {
+        return;
+      }
+
+      await axios.post("/users.json", this.userData);
+
+      this.userData = {
+        name: "",
+        email: "",
+        password: ""
+      };
+      this.repeatPassword = "";
+    }
+  }
 };
 </script>
 

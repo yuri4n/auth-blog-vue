@@ -25,11 +25,18 @@
           class="mr-8 hover:text-gray-700"
           >Home</router-link
         >
+
         <router-link
           to="/about"
           active-class="font-bold"
           class="mr-8 hover:text-gray-700"
           >About</router-link
+        >
+        <router-link
+          to="/about"
+          active-class="font-bold"
+          class="mr-8 hover:text-gray-700"
+          >{{ userName }}</router-link
         >
         <router-link to="/auth" class="text-red-500">Sign Out</router-link>
       </ul>
@@ -38,8 +45,18 @@
 </template>
 
 <script>
+import axios from "axios";
+
 export default {
-  name: "Navigation"
+  name: "Navigation",
+  created() {
+    axios.get("/users.json").then(res => {
+      this.userName = Object.values(res.data)[0].name;
+    });
+  },
+  data: () => ({
+    userName: ""
+  })
 };
 </script>
 
