@@ -39,13 +39,13 @@
           class="mr-8 hover:text-gray-700"
           >{{ user.name }}</router-link
         >
-        <router-link
+        <li
           v-if="isAuthenticated"
-          to="/auth"
-          class="text-red-500"
+          class="text-red-500 cursor-pointer hover:text-red-700 transition duration-300"
           @click="onLogout"
-          >Log Out</router-link
         >
+          Log Out
+        </li>
       </ul>
     </div>
   </div>
