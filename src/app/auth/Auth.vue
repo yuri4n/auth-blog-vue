@@ -1,7 +1,7 @@
 <template>
   <div>
     <div class="flex">
-      <div class="md:w-1/2 sm:w-full md:h-screen relative px-20 py-32">
+      <div class="md:w-1/2 sm:w-full md:h-screen relative px-20">
         <div class="w-full h-full flex flex-col justify-center">
           <div class="mb-10 transition-all duration-300">
             <p class="text-2xl text-gray-900 tracking-wider">

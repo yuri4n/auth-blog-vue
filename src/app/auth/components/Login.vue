@@ -4,6 +4,7 @@
       <label class="my-2 inline-block w-full">
         Email Address
         <input
+          v-model="userData.email"
           placeholder="Your Awesome Email"
           class="transition duration-300 inline-block w-full border border-gray-400 px-5 py-3 italic placeholder-gray-600 text-gray-800 focus:border-red-500 outline-none"
           type="email"
@@ -13,6 +14,7 @@
         Password
         <input
           placeholder="Your Secret Password"
+          v-model="userData.password"
           class="transition duration-300 inline-block w-full border border-gray-400 px-5 py-3 italic placeholder-gray-600 text-gray-800 focus:border-red-500 outline-none"
           type="password"
         />
@@ -21,6 +23,7 @@
     <div>
       <button
         class="mr-5 py-2 w-32 tracking-wider bg-red-500 shadow text-white hover:shadow-2xl transition duration-300 hover:bg-red-400"
+        @click="login"
       >
         Login
       </button>
@@ -36,8 +39,33 @@
 </template>
 
 <script>
+import axios from "../../../axios_auth";
+
 export default {
-  name: "Login"
+  name: "Login",
+  data: () => ({
+    userData: {
+      email: "",
+      password: ""
+    }
+  }),
+  methods: {
+    async login() {
+      await axios.post(
+        ":signInWithPassword?key=AIzaSyBh7e65HnZbT04Ex9r2ikLm3VsniBnSwuk",
+        {
+          email: this.userData.email,
+          password: this.userData.password,
+          returnSecureToken: true
+        }
+      );
+
+      this.userData = {
+        email: "",
+        password: ""
+      };
+    }
+  }
 };
 </script>
 
